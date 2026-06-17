@@ -87,4 +87,24 @@ abstract class Tiket {
         
         return $data;
     }
+
+    // ── Static Method: selectWhere ────────────────────────────
+    /**
+     * Mengambil data dari tabel tiket dengan kondisi WHERE
+     * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "nama_film = 'Avatar'")
+     * @return array Array yang berisi hasil query dari tabel tiket sesuai kondisi
+     */
+    public static function selectWhere(string $whereClause): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket WHERE " . $whereClause);
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
 }
