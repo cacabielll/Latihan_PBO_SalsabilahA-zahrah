@@ -49,30 +49,54 @@ class TiketVelvet extends Tiket {
         return ($this->hargaDasarTiket + self::SURCHARGE_VELVET) * $this->jumlah_kursi;
     }
 
-    // ── Implementasi Abstract Method: tampilkanInfoFasilitas ──
+    // ── Implementasi Abstract Method: tampilkanInfoFasilitas ─
     public function tampilkanInfoFasilitas(): void {
-        $bantal  = $this->bantalSelimutPack ? '✅ Tersedia' : '❌ Tidak tersedia';
-        $butler  = $this->layananButler     ?? '<em>Tidak ada layanan butler</em>';
-
-        echo "<div style='font-family:sans-serif; border:1px solid #7b2d8b;
-                          padding:10px; margin:8px 0; border-radius:6px;'>
-                <h3 style='margin:0 0 8px; color:#7b2d8b;'>
-                    👑 Studio Velvet — {$this->nama_film}
-                </h3>
-                <ul>
-                    <li><strong>Bantal &amp; Selimut Pack</strong> : {$bantal}</li>
-                    <li><strong>Layanan Butler</strong> : {$butler}</li>
-                    <li><strong>Surcharge Velvet</strong> : Rp "
-                        . number_format(self::SURCHARGE_VELVET, 0, ',', '.') .
-                    "</li>
-                    <li><strong>Total Harga</strong> : Rp "
-                        . number_format($this->hitungTotalHarga(), 0, ',', '.') .
-                    "</li>
-                </ul>
-              </div>";
+        echo "=== Fasilitas Tiket Velvet ===\n";
+        echo "Bantal & Selimut Pack: " . ($this->bantalSelimutPack ? "Tersedia" : "Tidak Tersedia") . "\n";
+        echo "Layanan Butler: " . ($this->layananButler ?? "N/A") . "\n";
+        echo "Surcharge Velvet: Rp " . number_format(self::SURCHARGE_VELVET, 0, ',', '.') . "\n";
     }
 
     // ── Getters ──────────────────────────────────────────────
     public function getBantalSelimutPack(): bool  { return $this->bantalSelimutPack; }
     public function getLayananButler(): ?string   { return $this->layananButler; }
+
+    // ── Static Method: selectAll ─────────────────────────────
+    /**
+     * Mengambil semua data dari tabel tiket_velvet
+     * @return array Array yang berisi hasil query dari tabel tiket_velvet
+     */
+    public static function selectAll(): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket_velvet");
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
+
+    // ── Static Method: selectWhere ────────────────────────────
+    /**
+     * Mengambil data dari tabel tiket_velvet dengan kondisi WHERE
+     * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "bantal_selimut_pack = 1")
+     * @return array Array yang berisi hasil query dari tabel tiket_velvet sesuai kondisi
+     */
+    public static function selectWhere(string $whereClause): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket_velvet WHERE " . $whereClause);
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
 }

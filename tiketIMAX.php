@@ -49,30 +49,54 @@ class TiketIMAX extends Tiket {
         return ($this->hargaDasarTiket + self::SURCHARGE_IMAX) * $this->jumlah_kursi;
     }
 
-    // ── Implementasi Abstract Method: tampilkanInfoFasilitas ──
+    // ── Implementasi Abstract Method: tampilkanInfoFasilitas ─
     public function tampilkanInfoFasilitas(): void {
-        $kacamata    = $this->kacamata3dId   ?? '<em>Tidak tersedia</em>';
-        $efekGerak   = $this->efekGerakFitur ?? '<em>Tidak tersedia</em>';
-
-        echo "<div style='font-family:sans-serif; border:1px solid #0057b8;
-                          padding:10px; margin:8px 0; border-radius:6px;'>
-                <h3 style='margin:0 0 8px; color:#0057b8;'>
-                    🎥 Studio IMAX — {$this->nama_film}
-                </h3>
-                <ul>
-                    <li><strong>ID Kacamata 3D</strong> : {$kacamata}</li>
-                    <li><strong>Efek Gerak Fitur</strong> : {$efekGerak}</li>
-                    <li><strong>Surcharge IMAX</strong> : Rp "
-                        . number_format(self::SURCHARGE_IMAX, 0, ',', '.') .
-                    "</li>
-                    <li><strong>Total Harga</strong> : Rp "
-                        . number_format($this->hitungTotalHarga(), 0, ',', '.') .
-                    "</li>
-                </ul>
-              </div>";
+        echo "=== Fasilitas Tiket IMAX ===\n";
+        echo "Kacamata 3D ID: " . ($this->kacamata3dId ?? "N/A") . "\n";
+        echo "Efek Gerak Fitur: " . ($this->efekGerakFitur ?? "N/A") . "\n";
+        echo "Surcharge IMAX: Rp " . number_format(self::SURCHARGE_IMAX, 0, ',', '.') . "\n";
     }
 
     // ── Getters ──────────────────────────────────────────────
     public function getKacamata3dId(): ?string   { return $this->kacamata3dId; }
     public function getEfekGerakFitur(): ?string { return $this->efekGerakFitur; }
+
+    // ── Static Method: selectAll ─────────────────────────────
+    /**
+     * Mengambil semua data dari tabel tiket_imax
+     * @return array Array yang berisi hasil query dari tabel tiket_imax
+     */
+    public static function selectAll(): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket_imax");
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
+
+    // ── Static Method: selectWhere ────────────────────────────
+    /**
+     * Mengambil data dari tabel tiket_imax dengan kondisi WHERE
+     * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "efek_gerak_fitur = '4DX'")
+     * @return array Array yang berisi hasil query dari tabel tiket_imax sesuai kondisi
+     */
+    public static function selectWhere(string $whereClause): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket_imax WHERE " . $whereClause);
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
 }

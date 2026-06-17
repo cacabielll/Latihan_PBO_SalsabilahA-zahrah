@@ -69,12 +69,12 @@ abstract class Tiket {
     public function getJumlahKursi(): int  { return $this->jumlah_kursi; }
     public function getHargaDasarTiket(): float { return $this->hargaDasarTiket; }
 
-    // ── Static Method: selectAll ─────────────────────────────
+    // ── Static Method: selectAllTiket ─────────────────────────
     /**
      * Mengambil semua data dari tabel tiket
      * @return array Array yang berisi hasil query dari tabel tiket
      */
-    public static function selectAll(): array {
+    public static function selectAllTiket(): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket");
         
@@ -88,13 +88,13 @@ abstract class Tiket {
         return $data;
     }
 
-    // ── Static Method: selectWhere ────────────────────────────
+    // ── Static Method: selectWhereTiket ────────────────────────
     /**
      * Mengambil data dari tabel tiket dengan kondisi WHERE
      * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "nama_film = 'Avatar'")
      * @return array Array yang berisi hasil query dari tabel tiket sesuai kondisi
      */
-    public static function selectWhere(string $whereClause): array {
+    public static function selectWhereTiket(string $whereClause): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket WHERE " . $whereClause);
         

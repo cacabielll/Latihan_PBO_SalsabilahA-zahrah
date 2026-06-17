@@ -47,24 +47,54 @@ class TiketRegular extends Tiket {
         return $this->hargaDasarTiket * $this->jumlah_kursi;
     }
 
-    // ── Implementasi Abstract Method: tampilkanInfoFasilitas ──
+    // ── Implementasi Abstract Method: tampilkanInfoFasilitas ─
     public function tampilkanInfoFasilitas(): void {
-        echo "<div style='font-family:sans-serif; border:1px solid #ccc;
-                          padding:10px; margin:8px 0; border-radius:6px;'>
-                <h3 style='margin:0 0 8px; color:#333;'>
-                    🎬 Studio Regular — {$this->nama_film}
-                </h3>
-                <ul>
-                    <li><strong>Tipe Audio</strong> : {$this->tipeAudio}</li>
-                    <li><strong>Lokasi Baris</strong> : {$this->lokasiBaris}</li>
-                    <li><strong>Total Harga</strong> : Rp "
-                        . number_format($this->hitungTotalHarga(), 0, ',', '.') .
-                    "</li>
-                </ul>
-              </div>";
+        echo "=== Fasilitas Tiket Regular ===\n";
+        echo "Tipe Audio: " . $this->tipeAudio . "\n";
+        echo "Lokasi Baris: " . $this->lokasiBaris . "\n";
+        echo "Surcharge: Tidak ada\n";
     }
 
     // ── Getters ──────────────────────────────────────────────
     public function getTipeAudio(): string   { return $this->tipeAudio; }
     public function getLokasiBaris(): string { return $this->lokasiBaris; }
+
+    // ── Static Method: selectAll ─────────────────────────────
+    /**
+     * Mengambil semua data dari tabel tiket_regular
+     * @return array Array yang berisi hasil query dari tabel tiket_regular
+     */
+    public static function selectAll(): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket_regular");
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
+
+    // ── Static Method: selectWhere ────────────────────────────
+    /**
+     * Mengambil data dari tabel tiket_regular dengan kondisi WHERE
+     * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "lokasi_baris = 'A'")
+     * @return array Array yang berisi hasil query dari tabel tiket_regular sesuai kondisi
+     */
+    public static function selectWhere(string $whereClause): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket_regular WHERE " . $whereClause);
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
 }
