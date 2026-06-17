@@ -66,7 +66,7 @@ class TiketIMAX extends Tiket {
      * Mengambil semua data dari tabel tiket_imax
      * @return array Array yang berisi hasil query dari tabel tiket_imax
      */
-    public static function selectAll(): array {
+    public static function selectAllIMAX(): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket_imax");
         
@@ -80,13 +80,13 @@ class TiketIMAX extends Tiket {
         return $data;
     }
 
-    // ── Static Method: selectWhere ────────────────────────────
+    // ── Static Method: selectWhereIMAX ─────────────────────────
     /**
      * Mengambil data dari tabel tiket_imax dengan kondisi WHERE
      * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "efek_gerak_fitur = '4DX'")
      * @return array Array yang berisi hasil query dari tabel tiket_imax sesuai kondisi
      */
-    public static function selectWhere(string $whereClause): array {
+    public static function selectWhereIMAX(string $whereClause): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket_imax WHERE " . $whereClause);
         

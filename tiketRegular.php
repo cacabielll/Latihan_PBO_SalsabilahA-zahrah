@@ -59,12 +59,12 @@ class TiketRegular extends Tiket {
     public function getTipeAudio(): string   { return $this->tipeAudio; }
     public function getLokasiBaris(): string { return $this->lokasiBaris; }
 
-    // ── Static Method: selectAll ─────────────────────────────
+    // ── Static Method: selectAllRegular ────────────────────────
     /**
      * Mengambil semua data dari tabel tiket_regular
      * @return array Array yang berisi hasil query dari tabel tiket_regular
      */
-    public static function selectAll(): array {
+    public static function selectAllRegular(): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket_regular");
         
@@ -78,13 +78,13 @@ class TiketRegular extends Tiket {
         return $data;
     }
 
-    // ── Static Method: selectWhere ────────────────────────────
+    // ── Static Method: selectWhereRegular ────────────────────────
     /**
      * Mengambil data dari tabel tiket_regular dengan kondisi WHERE
      * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "lokasi_baris = 'A'")
      * @return array Array yang berisi hasil query dari tabel tiket_regular sesuai kondisi
      */
-    public static function selectWhere(string $whereClause): array {
+    public static function selectWhereRegular(string $whereClause): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket_regular WHERE " . $whereClause);
         

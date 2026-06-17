@@ -66,7 +66,7 @@ class TiketVelvet extends Tiket {
      * Mengambil semua data dari tabel tiket_velvet
      * @return array Array yang berisi hasil query dari tabel tiket_velvet
      */
-    public static function selectAll(): array {
+    public static function selectAllVelvet(): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket_velvet");
         
@@ -80,13 +80,13 @@ class TiketVelvet extends Tiket {
         return $data;
     }
 
-    // ── Static Method: selectWhere ────────────────────────────
+    // ── Static Method: selectWhereVelvet ────────────────────────
     /**
      * Mengambil data dari tabel tiket_velvet dengan kondisi WHERE
      * @param string $whereClause Kondisi WHERE (contoh: "id_tiket = 1" atau "bantal_selimut_pack = 1")
      * @return array Array yang berisi hasil query dari tabel tiket_velvet sesuai kondisi
      */
-    public static function selectWhere(string $whereClause): array {
+    public static function selectWhereVelvet(string $whereClause): array {
         $db = new Database();
         $result = $db->query("SELECT * FROM tiket_velvet WHERE " . $whereClause);
         
