@@ -42,9 +42,10 @@ class TiketRegular extends Tiket {
     }
 
     // ── Implementasi Abstract Method: hitungTotalHarga ───────
-    // Regular: tidak ada surcharge — total = harga dasar * jumlah kursi
+    // Regular: tarif standar murni tanpa biaya tambahan fasilitas
+    // total = jumlah kursi * harga dasar tiket
     public function hitungTotalHarga(): float {
-        return $this->hargaDasarTiket * $this->jumlah_kursi;
+        return $this->jumlah_kursi * $this->hargaDasarTiket;
     }
 
     // ── Implementasi Abstract Method: tampilkanInfoFasilitas ─
@@ -52,7 +53,7 @@ class TiketRegular extends Tiket {
         echo "=== Fasilitas Tiket Regular ===\n";
         echo "Tipe Audio: " . $this->tipeAudio . "\n";
         echo "Lokasi Baris: " . $this->lokasiBaris . "\n";
-        echo "Surcharge: Tidak ada\n";
+        echo "Surcharge: Tidak ada (Tarif Standar)\n";
     }
 
     // ── Getters ──────────────────────────────────────────────

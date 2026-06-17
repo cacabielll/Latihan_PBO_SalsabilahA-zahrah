@@ -44,9 +44,10 @@ class TiketVelvet extends Tiket {
     }
 
     // ── Implementasi Abstract Method: hitungTotalHarga ───────
-    // Velvet: harga dasar + surcharge Velvet, dikali jumlah kursi
+    // Velvet: surcharge/biaya tambahan kelas premium sebesar 50% dari total harga dasar
+    // total = (jumlah kursi * harga dasar tiket) * 1.50
     public function hitungTotalHarga(): float {
-        return ($this->hargaDasarTiket + self::SURCHARGE_VELVET) * $this->jumlah_kursi;
+        return ($this->jumlah_kursi * $this->hargaDasarTiket) * 1.50;
     }
 
     // ── Implementasi Abstract Method: tampilkanInfoFasilitas ─
@@ -54,7 +55,7 @@ class TiketVelvet extends Tiket {
         echo "=== Fasilitas Tiket Velvet ===\n";
         echo "Bantal & Selimut Pack: " . ($this->bantalSelimutPack ? "Tersedia" : "Tidak Tersedia") . "\n";
         echo "Layanan Butler: " . ($this->layananButler ?? "N/A") . "\n";
-        echo "Surcharge Velvet: Rp " . number_format(self::SURCHARGE_VELVET, 0, ',', '.') . "\n";
+        echo "Surcharge Kelas Premium Velvet: 50% dari total harga dasar (Rp " . number_format($this->jumlah_kursi * $this->hargaDasarTiket * 0.50, 0, ',', '.') . ")\n";
     }
 
     // ── Getters ──────────────────────────────────────────────

@@ -44,9 +44,10 @@ class TiketIMAX extends Tiket {
     }
 
     // ── Implementasi Abstract Method: hitungTotalHarga ───────
-    // IMAX: harga dasar + surcharge IMAX, dikali jumlah kursi
+    // IMAX: biaya tambahan teknologi proyeksi layar lebar IMAX dan audio flat 35000
+    // total = (jumlah kursi * harga dasar tiket) + 35000
     public function hitungTotalHarga(): float {
-        return ($this->hargaDasarTiket + self::SURCHARGE_IMAX) * $this->jumlah_kursi;
+        return ($this->jumlah_kursi * $this->hargaDasarTiket) + 35000;
     }
 
     // ── Implementasi Abstract Method: tampilkanInfoFasilitas ─
@@ -54,7 +55,7 @@ class TiketIMAX extends Tiket {
         echo "=== Fasilitas Tiket IMAX ===\n";
         echo "Kacamata 3D ID: " . ($this->kacamata3dId ?? "N/A") . "\n";
         echo "Efek Gerak Fitur: " . ($this->efekGerakFitur ?? "N/A") . "\n";
-        echo "Surcharge IMAX: Rp " . number_format(self::SURCHARGE_IMAX, 0, ',', '.') . "\n";
+        echo "Surcharge Teknologi IMAX: Rp " . number_format(35000, 0, ',', '.') . " (teknologi proyeksi layar lebar + audio flat)\n";
     }
 
     // ── Getters ──────────────────────────────────────────────
