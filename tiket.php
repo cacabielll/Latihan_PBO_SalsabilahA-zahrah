@@ -56,24 +56,11 @@ abstract class Tiket {
     abstract public function hitungTotalHarga(): float;
 
     /**
-     * Menampilkan informasi fasilitas yang tersedia
-     * sesuai jenis studio masing-masing.
+     * Menampilkan informasi fasilitas tiket.
+     * Setiap jenis tiket memiliki fasilitas berbeda
+     * (misal: Regular = audio, IMAX = 3D glasses, Velvet = butler service, dst.)
      */
     abstract public function tampilkanInfoFasilitas(): void;
-
-    // ── Concrete Methods (Opsional — bisa dipakai semua anak) ─
-    /**
-     * Menampilkan informasi umum tiket (dari atribut global/induk).
-     */
-    public function tampilkanInfoUmum(): void {
-        echo "<table border='1' cellpadding='6' style='font-family:sans-serif; border-collapse:collapse;'>
-                <tr><th>ID Tiket</th><td>{$this->id_tiket}</td></tr>
-                <tr><th>Film</th><td>{$this->nama_film}</td></tr>
-                <tr><th>Jadwal Tayang</th><td>{$this->jadwal_tayang}</td></tr>
-                <tr><th>Jumlah Kursi</th><td>{$this->jumlah_kursi}</td></tr>
-                <tr><th>Harga Dasar</th><td>Rp " . number_format($this->hargaDasarTiket, 0, ',', '.') . "</td></tr>
-              </table><br>";
-    }
 
     // ── Getters ──────────────────────────────────────────────
     public function getIdTiket(): int      { return $this->id_tiket; }
@@ -81,4 +68,23 @@ abstract class Tiket {
     public function getJadwalTayang(): string { return $this->jadwal_tayang; }
     public function getJumlahKursi(): int  { return $this->jumlah_kursi; }
     public function getHargaDasarTiket(): float { return $this->hargaDasarTiket; }
+
+    // ── Static Method: selectAll ─────────────────────────────
+    /**
+     * Mengambil semua data dari tabel tiket
+     * @return array Array yang berisi hasil query dari tabel tiket
+     */
+    public static function selectAll(): array {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM tiket");
+        
+        $data = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        
+        return $data;
+    }
 }
